@@ -1,0 +1,9 @@
+{
+  "application": {
+    "resolution": {
+      "width": 1024,
+      "height": 768
+    },
+    "name": "Game Engine"
+  }
+}

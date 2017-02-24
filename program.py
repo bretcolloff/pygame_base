@@ -1,15 +1,27 @@
 import pygame
 
+from src.config import *
+from src.entities.entity import *
+from src.resource_managers.entitymanager import *
+
 # initialize game engine
 pygame.init()
+
+# Load config
+config = Config('resources/data/config.json')
 # set screen width/height and caption
-size = [640, 480]
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption('My Game')
+
+screen = pygame.display.set_mode((config.width, config.height))
+pygame.display.set_caption(config.name)
+
 # initialize clock. used later in the loop.
 clock = pygame.time.Clock()
 
-# Loop until the user clicks close button
+# Load entites
+entityManager = EntityManager()
+entityManager.load('resources/data/data.json')
+
+# Game loop
 done = False
 while done == False:
     # write event handlers here
@@ -18,9 +30,12 @@ while done == False:
             done = True
     # write game logic here
 
-    # clear the screen before drawing
+    # Clear the screen.
     screen.fill((100, 149, 237))
+
     # write draw code here
+    for entity in entityManager.entities:
+        entity.render(screen)
 
     pygame.display.update()
     # run at 30 fps

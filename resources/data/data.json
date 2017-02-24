@@ -1,0 +1,13 @@
+{
+  "entities": [
+    {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "resources": {
+        "image": "resources/images/sprites/square.png"
+      }
+    }
+  ]
+}
