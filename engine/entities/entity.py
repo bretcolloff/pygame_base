@@ -26,3 +26,13 @@ class Entity:
     def render(self, screen):
         if self.visible:
             screen.blit(self.image, (self.x, self.y))
+
+    def process_input(self, input_map):
+        if input_map[pygame.K_UP]:
+            self.y -= 1
+        if input_map[pygame.K_DOWN]:
+            self.y += 1
+        if input_map[pygame.K_LEFT]:
+            self.x -= 1
+        if input_map[pygame.K_RIGHT]:
+            self.x += 1

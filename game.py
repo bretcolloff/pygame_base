@@ -4,6 +4,8 @@ from engine.config import *
 from engine.entities.entity import *
 from engine.resource_managers.entitymanager import *
 
+from inputhandler import *
+
 # initialize game engine
 pygame.init()
 
@@ -21,6 +23,9 @@ clock = pygame.time.Clock()
 entityManager = EntityManager()
 entityManager.load('resources/data/data.json')
 
+inputHandler = InputHandler()
+inputHandler.set_focus(entityManager.entities[0])
+
 # Game loop
 done = False
 while done == False:
@@ -28,6 +33,10 @@ while done == False:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
+
+    # Process input
+    inputHandler.apply_input(pygame.key.get_pressed())
+
     # write game logic here
 
     # Clear the screen.
