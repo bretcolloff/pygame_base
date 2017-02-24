@@ -1,6 +1,6 @@
 import json
 
-from src.entities.entity import Entity
+from engine.entities.entity import Entity
 
 
 class EntityManager:

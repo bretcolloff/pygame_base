@@ -1,8 +1,8 @@
 import pygame
 
-from src.config import *
-from src.entities.entity import *
-from src.resource_managers.entitymanager import *
+from engine.config import *
+from engine.entities.entity import *
+from engine.resource_managers.entitymanager import *
 
 # initialize game engine
 pygame.init()
