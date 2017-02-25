@@ -9,4 +9,5 @@ For the minute the aim is to be no more complicated than just clone and extend, 
 ..* The recommended method is to use pip (pip install pygame) but you can get the standard packages from [here](https://bitbucket.org/pygame/pygame/overview).
 
 ## Demos
+Demos created with this game engine.
 * Cliff chicken.
