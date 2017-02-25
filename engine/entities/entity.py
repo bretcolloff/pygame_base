@@ -6,6 +6,11 @@ class Entity:
         self.image = None
         self.x = None
         self.y = None
+        self.width = None
+        self.height = None
+        self.visible = False
+        self.id = ""
+        self.static = False
         self.visible = False
 
     def load(self, data):
@@ -17,11 +22,20 @@ class Entity:
             position = data['position']
             self.x = position['x']
             self.y = position['y']
-            self.visible = True
         else:
             self.x = None
             self.y = None
-            self.visible = False
+
+        if 'properties' in data:
+            properties = data['properties']
+            self.id = properties['id']
+            self.static = properties['static']
+            self.visible = properties['visible']
+
+        if 'size' in data:
+            size = data['size']
+            self.width = size['width']
+            self.height = size['height']
 
     def render(self, screen):
         if self.visible:
@@ -36,3 +50,6 @@ class Entity:
             self.x -= 1
         if input_map[pygame.K_RIGHT]:
             self.x += 1
+
+    def update(self):
+        return

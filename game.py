@@ -38,6 +38,8 @@ while done == False:
     inputHandler.apply_input(pygame.key.get_pressed())
 
     # write game logic here
+    for entity in entityManager.entities:
+        entity.update()
 
     # Clear the screen.
     screen.fill((100, 149, 237))
