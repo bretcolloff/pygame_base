@@ -4,6 +4,7 @@ from engine.gamebase import GameBase
 from game.aidriver import AIDriver
 
 
+""" The core logic for the driving simulation. """
 class Game(GameBase):
     def __init__(self, config, clock):
         GameBase.__init__(self, config, clock)
@@ -13,9 +14,10 @@ class Game(GameBase):
         self.topValid = 0
         self.distance = 0
         self.success = True
-        self.aiRun = True
+        self.aiRun = False
         self.aiDriver = AIDriver()
 
+    # Initialise driving game elements.
     def initialise(self, data):
         GameBase.initialise(self, data)
 
@@ -25,6 +27,7 @@ class Game(GameBase):
         self.car = self.entityManager.find_entity("car")
         self.inputHandler.set_focus(self.car)
 
+    # Handle the human or AI input.
     def handle_input(self):
         if not self.aiRun:
             GameBase.handle_input(self)
@@ -36,6 +39,7 @@ class Game(GameBase):
         if self.input_map[pygame.K_SPACE] and self.car.velocity is 0:
             self.reset()
 
+    # Update driving game specific logic.
     def update(self):
         GameBase.update(self)
 
@@ -51,6 +55,7 @@ class Game(GameBase):
         # Update distance
         self.distance = (self.config.width - 50) - (self.car.x + 25)
 
+    # Render additional driving game specific entities.
     def render(self, screen, font):
         GameBase.render(self, screen, font)
 
@@ -65,6 +70,7 @@ class Game(GameBase):
             textsurface = font.render('Failed', False, (255, 0, 0))
             screen.blit(textsurface, (350, 0))
 
+    # Reset elements of the driving simulation for 'retrying'.
     def reset(self):
         if self.success:
             if self.topSpeed > self.topValid:
