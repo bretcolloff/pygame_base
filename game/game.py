@@ -7,12 +7,12 @@ class Game(GameBase):
 
         self.car = None
         self.topSpeed = 0
+        self.topValid = 0
         self.success = True
 
     def initialise(self, data):
         GameBase.initialise(self, data)
 
-        self.topSpeed = 0
         self.success = True
         self.car = self.entityManager.find_entity("car")
         self.inputHandler.set_focus(self.car)
@@ -20,7 +20,7 @@ class Game(GameBase):
     def handle_input(self):
         GameBase.handle_input(self)
 
-        if self.input_map[pygame.K_SPACE]:
+        if self.input_map[pygame.K_SPACE] and self.car.velocity is 0:
             self.reset()
 
     def update(self):
@@ -32,6 +32,7 @@ class Game(GameBase):
         # Stop the car from falling off the edge.
         if self.car.x > self.config.width - 75: # The width of the wall
             self.car.velocity = 0
+            self.topSpeed = 0
             self.success = False
 
     def render(self, screen, font):
@@ -40,11 +41,14 @@ class Game(GameBase):
         # Render text
         textsurface = font.render('Speed: ' + str(self.car.velocity)[:5], False, (0, 30, 0))
         screen.blit(textsurface, (0, 0))
-        textsurface = font.render('Top: ' + str(self.topSpeed)[:5], False, (0, 30, 0))
+        textsurface = font.render('Top: ' + str(self.topValid)[:5], False, (0, 30, 0))
         screen.blit(textsurface, (0, 30))
         if not self.success:
             textsurface = font.render('Failed', False, (255, 0, 0))
             screen.blit(textsurface, (350, 0))
 
     def reset(self):
+        if self.success:
+            if self.topSpeed > self.topValid:
+                self.topValid = self.topSpeed
         self.initialise(self.datafile)
