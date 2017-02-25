@@ -16,7 +16,7 @@ clock = pygame.time.Clock()
 
 # Initialize game
 game = Game(config, clock)
-game.initialise()
+game.initialise('resources/data/data.json')
 
 # Game loop
 done = False
