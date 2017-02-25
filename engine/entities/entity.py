@@ -1,18 +1,20 @@
 import pygame
 
-
+""" The base class for renderable objects in the engine. """
 class Entity:
     def __init__(self):
-        self.image = None
-        self.x = None
-        self.y = None
-        self.width = None
-        self.height = None
-        self.visible = False
         self.id = ""
-        self.static = False
+        self.image = None
         self.visible = False
 
+        self.x = None
+        self.y = None
+        self.static = False
+
+        self.width = None
+        self.height = None
+
+    # Load the entity from the provided config.
     def load(self, data):
         resources = data['resources']
 
@@ -37,10 +39,12 @@ class Entity:
             self.width = size['width']
             self.height = size['height']
 
+    # Render the image.
     def render(self, screen):
         if self.visible:
             screen.blit(self.image, (self.x, self.y))
 
+    # Handle keyboard input.
     def process_input(self, input_map):
         if input_map[pygame.K_UP]:
             self.y -= 1
@@ -51,5 +55,6 @@ class Entity:
         if input_map[pygame.K_RIGHT]:
             self.x += 1
 
+    # Apply local updates to the object.
     def update(self):
         return

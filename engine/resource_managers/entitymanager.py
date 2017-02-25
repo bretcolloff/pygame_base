@@ -3,11 +3,12 @@ import json
 
 from engine.entities.entity import Entity
 
-
+""" Manages game entities. """
 class EntityManager:
     def __init__(self):
         self.entities = []
 
+    # Load game entities from config.
     def load(self, path):
         data = []
         with open(path) as data_file:
@@ -24,6 +25,7 @@ class EntityManager:
 
                     self.entities.append(entity)
 
+    # Instantiate a specialised entity by module name.
     def instantiate_specialisation(self, entityData):
         module = entityData['properties']['specialisation_module']
         specialisation = entityData['properties']['specialisation']
@@ -33,6 +35,7 @@ class EntityManager:
         instance.load(entityData)
         return instance
 
+    # Find an entity by it's id.
     def find_entity(self, id):
         for entity in self.entities:
             if entity.id == id:
