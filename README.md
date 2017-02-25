@@ -7,3 +7,4 @@ For the minute the aim is to be no more complicated than just clone and extend, 
 
 1. Install Python 2.7
 2. Install pygame. The recommended method is to use pip (pip install pygame) but you can get the standard packages from [here](https://bitbucket.org/pygame/pygame/overview).
+
