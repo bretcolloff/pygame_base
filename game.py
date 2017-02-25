@@ -3,8 +3,9 @@ import pygame
 from engine.config import *
 from game.game import Game
 
-# initialize pygame
+# initialize pygame.
 pygame.init()
+pygame.font.init()
 
 # Load config and set window parameters.
 config = Config('resources/data/config.json')
@@ -14,7 +15,10 @@ pygame.display.set_caption(config.name)
 # initialize clock.
 clock = pygame.time.Clock()
 
-# Initialize game
+# Load in a font.
+font = pygame.font.SysFont("Comic Sans MS", 30)
+
+# Initialize game.
 game = Game(config, clock)
 game.initialise('resources/data/data.json')
 
@@ -30,7 +34,7 @@ while done == False:
     game.update()
 
     screen.fill((100, 149, 237))
-    game.render(screen)
+    game.render(screen, font)
 
     pygame.display.update()
 
