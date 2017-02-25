@@ -2,26 +2,6 @@
   "entities": [
     {
       "position": {
-        "x": 10,
-        "y": 405
-      },
-      "size": {
-        "width": 25,
-        "height": 25
-      },
-      "resources": {
-        "image": "resources/images/sprites/square.png"
-      },
-      "properties": {
-        "visible": true,
-        "static": false,
-        "id": "car",
-        "specialisation_module": "game.entities.vehicle",
-        "specialisation": "Vehicle"
-      }
-    },
-    {
-      "position": {
         "x": 0,
         "y": 430
       },
@@ -54,6 +34,26 @@
         "visible": true,
         "static": true,
         "id": "wall"
+      }
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 405
+      },
+      "size": {
+        "width": 25,
+        "height": 25
+      },
+      "resources": {
+        "image": "resources/images/sprites/square.png"
+      },
+      "properties": {
+        "visible": true,
+        "static": false,
+        "id": "car",
+        "specialisation_module": "game.entities.vehicle",
+        "specialisation": "Vehicle"
       }
     }
   ]

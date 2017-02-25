@@ -24,7 +24,6 @@ class EntityManager:
 
                     self.entities.append(entity)
 
-
     def instantiate_specialisation(self, entityData):
         module = entityData['properties']['specialisation_module']
         specialisation = entityData['properties']['specialisation']
@@ -33,3 +32,9 @@ class EntityManager:
         instance = Specialisation()
         instance.load(entityData)
         return instance
+
+    def find_entity(self, id):
+        for entity in self.entities:
+            if entity.id == id:
+                return entity
+        return None

@@ -13,11 +13,11 @@ class Vehicle(Entity):
             self.accelerate()
 
     def accelerate(self):
-        self.velocity += 0.01
+        self.velocity += 0.1
 
     def brake(self):
         if self.velocity > 0:
-            self.velocity -= 0.05
+            self.velocity -= 0.5
 
         # Clamp the value so we don't go backwards.
         if self.velocity < 0:

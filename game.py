@@ -3,21 +3,19 @@ import pygame
 from engine.config import *
 from game.game import Game
 
-# initialize game engine
+# initialize pygame
 pygame.init()
 
-# Load config
+# Load config and set window parameters.
 config = Config('resources/data/config.json')
-# set screen width/height and caption
-
 screen = pygame.display.set_mode((config.width, config.height))
 pygame.display.set_caption(config.name)
 
-# initialize clock. used later in the loop.
+# initialize clock.
 clock = pygame.time.Clock()
 
 # Initialize game
-game = Game()
+game = Game(config, clock)
 game.initialise()
 
 # Game loop
@@ -35,7 +33,5 @@ while done == False:
     game.render(screen)
 
     pygame.display.update()
-    # run at 30 fps
-    clock.tick(30)
 
 pygame.quit()
