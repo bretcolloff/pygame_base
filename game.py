@@ -38,5 +38,4 @@ while done == False:
     # run at 30 fps
     clock.tick(30)
 
-# close the window and quit
 pygame.quit()
