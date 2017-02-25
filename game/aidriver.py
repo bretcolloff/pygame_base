@@ -4,8 +4,8 @@ import pygame
 class AIDriver:
     def __init__(self):
         self.results = []
-        self.next = 50
-        self.last = 50
+        self.next = 78
+        self.last = 78
 
     def process_input(self, distance, velocity, success, top):
         key_map = {}
