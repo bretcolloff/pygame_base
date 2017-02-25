@@ -28,16 +28,10 @@ while done == False:
         if event.type == pygame.QUIT:
             done = True
 
-    # Process input
     game.handle_input()
-
-    # write game logic here
     game.update()
 
-    # Clear the screen.
     screen.fill((100, 149, 237))
-
-    # write draw code here
     game.render(screen)
 
     pygame.display.update()
