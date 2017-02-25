@@ -8,16 +8,16 @@ class Game(GameBase):
         self.car = None
 
     def initialise(self, data):
-        GameBase.__init__(self, data)
+        GameBase.initialise(self, data)
 
         self.car = self.entityManager.find_entity("car")
         self.inputHandler.set_focus(self.car)
 
     def handle_input(self):
-        GameBase.__init__(self)
+        GameBase.handle_input(self)
 
     def update(self):
-        GameBase.__init__(self)
+        GameBase.update(self)
 
         # Stop the car from falling off the edge.
         if self.car.x > self.config.width - self.car.width:
@@ -25,4 +25,4 @@ class Game(GameBase):
             self.car.x = self.config.width - self.car.width
 
     def render(self, screen):
-        GameBase.__init__()
+        GameBase.render(self, screen)
