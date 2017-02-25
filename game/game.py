@@ -1,16 +1,28 @@
+from engine.entities.entity import *
+from engine.resource_managers.entitymanager import *
+
+from inputhandler import *
+
+
 class Game():
     def __init__(self):
         self.entityManager = None
         self.inputHandler = None
 
     def initialise(self):
-        return
+        self.entityManager = EntityManager()
+        self.entityManager.load('resources/data/data.json')
+
+        self.inputHandler = InputHandler()
+        self.inputHandler.set_focus(self.entityManager.entities[0])
 
     def handle_input(self):
-        return
+        self.inputHandler.apply_input(pygame.key.get_pressed())
 
     def update(self):
-        return
+        for entity in self.entityManager.entities:
+            entity.update()
 
-    def render(self):
-        return
+    def render(self, screen):
+        for entity in self.entityManager.entities:
+            entity.render(screen)

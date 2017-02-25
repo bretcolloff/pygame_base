@@ -1,10 +1,7 @@
 import pygame
 
 from engine.config import *
-from engine.entities.entity import *
-from engine.resource_managers.entitymanager import *
-
-from inputhandler import *
+from game.game import Game
 
 # initialize game engine
 pygame.init()
@@ -19,12 +16,9 @@ pygame.display.set_caption(config.name)
 # initialize clock. used later in the loop.
 clock = pygame.time.Clock()
 
-# Load entites
-entityManager = EntityManager()
-entityManager.load('resources/data/data.json')
-
-inputHandler = InputHandler()
-inputHandler.set_focus(entityManager.entities[0])
+# Initialize game
+game = Game()
+game.initialise()
 
 # Game loop
 done = False
@@ -35,18 +29,16 @@ while done == False:
             done = True
 
     # Process input
-    inputHandler.apply_input(pygame.key.get_pressed())
+    game.handle_input()
 
     # write game logic here
-    for entity in entityManager.entities:
-        entity.update()
+    game.update()
 
     # Clear the screen.
     screen.fill((100, 149, 237))
 
     # write draw code here
-    for entity in entityManager.entities:
-        entity.render(screen)
+    game.render(screen)
 
     pygame.display.update()
     # run at 30 fps
