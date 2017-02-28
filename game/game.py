@@ -14,8 +14,8 @@ class Game(GameBase):
         self.topValid = 0
         self.distance = 0
         self.success = True
-        self.aiRun = False
-        self.aiDriver = AIDriver()
+        self.aiRun = True
+        self.aiDriver = None
 
     # Initialise driving game elements.
     def initialise(self, data):
@@ -23,9 +23,13 @@ class Game(GameBase):
 
         self.success = True
         self.topSpeed = 0
-        self.distance = 0
+
         self.car = self.entityManager.find_entity("car")
         self.inputHandler.set_focus(self.car)
+        self.distance = (self.config.width - 50) - (self.car.x + 25)
+
+        self.aiDriver = AIDriver()
+        self.aiDriver.train_ai(self.distance, self.car)
 
     # Handle the human or AI input.
     def handle_input(self):
@@ -33,7 +37,7 @@ class Game(GameBase):
             GameBase.handle_input(self)
         else:
             # Have the AI populate the input map.
-            self.input_map = self.aiDriver.process_input(self.distance, self.car.velocity, self.success, self.topSpeed)
+            self.input_map = self.aiDriver.process_input(self.distance, self.success, self.topSpeed)
             self.inputHandler.apply_input(self.input_map)
 
         if self.input_map[pygame.K_SPACE] and self.car.velocity is 0:

@@ -1,4 +1,5 @@
 import pygame
+import tensorflow as tf
 
 """ Takes input and provides decisions for driving the simulation. """
 class AIDriver:
@@ -6,13 +7,26 @@ class AIDriver:
         self.results = []
 
         # The number of remaining simulation steps.
-        self.next = 78
+        self.next = 0
+        self.last = 0
 
-        # The total number of acceleration steps from the last attempt.
-        self.last = 78
+    def train_ai(self, distance, car):
+        session = tf.Session()
+        accelSteps = tf.Variable([70.0], tf.float32)
+        accel = tf.placeholder(tf.float32) # car.accelStep
+        brake = tf.placeholder(tf.float32) # car.brakeStep
+
+        init = tf.global_variables_initializer()
+        session.run(init)
+
+        accelValues = tf.multiply(tf.range(70.0), accel)
+        travelled = tf.reduce_sum(accelValues)
+        n = session.run(travelled, {accel: car.accelStep})
+        print(n)
+
 
     #Provides input responses based on the simulation state.
-    def process_input(self, distance, velocity, success, top):
+    def process_input(self, velocity, success, top):
         key_map = {}
         key_map[pygame.K_SPACE] = False
         key_map[pygame.K_RIGHT] = False
