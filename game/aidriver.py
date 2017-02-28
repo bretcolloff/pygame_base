@@ -20,23 +20,32 @@ class AIDriver:
         init = tf.global_variables_initializer()
         session.run(init)
 
-        accelValues = tf.multiply(tf.range(70.0), accel)
+        accelValues = tf.multiply(tf.range(tf.reshape(accelSteps, [])), accel)
         top = tf.reduce_max(accelValues)
         travelled = tf.reduce_sum(accelValues)
+        # fff = (70 * (70 + 1) / 2) * car.accelStep
 
-        n = session.run(travelled, {accel: car.accelStep})
-        topSpeed = session.run(top, {accel: car.accelStep})
+        n = session.run(travelled, {accel: car.accelStep}) # Work out the distance travelled
+        topSpeed = session.run(top, {accel: car.accelStep}) # What was the last speed we were running at
 
         brakingSteps = tf.divide(topSpeed, brake)
         brakes = session.run(brakingSteps, {brake: car.brakeStep})
 
-        brakeValues = tf.multiply(tf.range(20.4), brake)
+        brakeValues = tf.multiply(tf.range(brakingSteps), brake)
         brakeDistance = tf.reduce_sum(brakeValues)
         d = session.run(brakeDistance, {brake: car.brakeStep})
 
         loss = dist - (n + d)
         l = session.run(loss)
-        print(n)
+
+        optimizer = tf.train.GradientDescentOptimizer(0.01)
+        train = optimizer.minimize(loss)
+
+        z = 0.0
+        for i in range(1000):
+            z = session.run(train, {accel: car.accelStep, brake: car.brakeStep})
+
+        print(z)
 
 
     #Provides input responses based on the simulation state.
