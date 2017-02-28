@@ -12,6 +12,7 @@ class AIDriver:
 
     def train_ai(self, distance, car):
         session = tf.Session()
+        dist = tf.constant(distance, tf.float32)
         accelSteps = tf.Variable([70.0], tf.float32)
         accel = tf.placeholder(tf.float32) # car.accelStep
         brake = tf.placeholder(tf.float32) # car.brakeStep
@@ -20,8 +21,21 @@ class AIDriver:
         session.run(init)
 
         accelValues = tf.multiply(tf.range(70.0), accel)
+        top = tf.reduce_max(accelValues)
         travelled = tf.reduce_sum(accelValues)
+
         n = session.run(travelled, {accel: car.accelStep})
+        topSpeed = session.run(top, {accel: car.accelStep})
+
+        brakingSteps = tf.divide(topSpeed, brake)
+        brakes = session.run(brakingSteps, {brake: car.brakeStep})
+
+        brakeValues = tf.multiply(tf.range(20.4), brake)
+        brakeDistance = tf.reduce_sum(brakeValues)
+        d = session.run(brakeDistance, {brake: car.brakeStep})
+
+        loss = dist - (n + d)
+        l = session.run(loss)
         print(n)
 
 

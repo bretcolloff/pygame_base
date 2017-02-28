@@ -6,7 +6,7 @@ class Vehicle(Entity):
         Entity.__init__(self)
         self.velocity = 0
         self.accelStep = 0.15
-        self.brakeStep = -0.5
+        self.brakeStep = 0.5
 
     # Process input to vehicle.
     def process_input(self, input_map):
@@ -22,7 +22,7 @@ class Vehicle(Entity):
     # Reduce the velocity.
     def brake(self):
         if self.velocity > 0:
-            self.velocity += self.brakeStep
+            self.velocity -= self.brakeStep
 
         # Clamp the value so we don't go backwards.
         if self.velocity < 0:
