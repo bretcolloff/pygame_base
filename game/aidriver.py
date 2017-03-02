@@ -13,32 +13,37 @@ class AIDriver:
     def train_ai(self, distance, car):
         session = tf.Session()
         dist = tf.constant(distance, tf.float32)
-        accelSteps = tf.Variable(70.0, tf.float32)
+        accelSteps = tf.Variable(80.0, tf.float32)
         accel = tf.placeholder(tf.float32) # car.accelStep
         brake = tf.placeholder(tf.float32) # car.brakeStep
 
+        # Start the TensorFlow session.
         init = tf.global_variables_initializer()
         session.run(init)
 
+        # Work out distance travelled with current step value and get the highest acceleration value.
         accelValues = tf.multiply(tf.range(accelSteps), accel)
         top = tf.reduce_max(accelValues)
         travelled = tf.reduce_sum(accelValues)
 
         topSpeed = session.run(top, {accel: car.accelStep}) # What was the last speed we were running at
 
+        # How long will we be braking for?
         brakingSteps = tf.divide(topSpeed, brake)
         brakeValues = tf.multiply(tf.range(brakingSteps), brake)
+
+        # How far will we travel while braking?
         brakeDistance = tf.reduce_sum(brakeValues)
 
         loss = dist - (travelled + brakeDistance)
-        # l = session.run(loss)
+        a = session.run(loss, {accel: car.accelStep, brake: car.brakeStep})
 
         optimizer = tf.train.GradientDescentOptimizer(0.01)
         train = optimizer.minimize(loss, var_list=[accelSteps])
 
-        z = 0.0
-        for i in range(1000):
-            z = session.run(train, {accel: car.accelStep, brake: car.brakeStep})
+        z = 100.0
+        while z > 0.5:
+           z = session.run(train, {accel: car.accelStep, brake: car.brakeStep})
 
         print(z)
 
