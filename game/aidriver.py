@@ -1,5 +1,6 @@
 import pygame
 import tensorflow as tf
+import engine.ml.helpers as helpers
 
 """ Takes input and provides decisions for driving the simulation. """
 class AIDriver:
@@ -30,6 +31,8 @@ class AIDriver:
 
         optimizer = tf.train.GradientDescentOptimizer(0.01)
         train = optimizer.minimize(loss)
+
+        helpers.print_tensorboard(session, loss, {accel: car.accelStep, brake: car.brakeStep})
 
         for x in range(100):
            session.run(train, {accel: car.accelStep, brake: car.brakeStep})
