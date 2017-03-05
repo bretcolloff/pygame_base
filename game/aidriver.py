@@ -26,20 +26,16 @@ class AIDriver:
         top = tf.reduce_max(accelValues)
         travelled = tf.reduce_sum(accelValues)
 
-        topSpeed = session.run(top, {accel: car.accelStep}) # What was the last speed we were running at
-
         # How long will we be braking for?
-        brakingSteps = tf.divide(topSpeed, brake)
+        brakingSteps = tf.divide(top, brake)
         brakeValues = tf.multiply(tf.range(brakingSteps), brake)
 
         # How far will we travel while braking?
         brakeDistance = tf.reduce_sum(brakeValues)
+        distance = tf.add(travelled, brakeDistance)
 
-        loss = dist - (travelled + brakeDistance)
-        a = session.run(loss, {accel: car.accelStep, brake: car.brakeStep})
-
-        optimizer = tf.train.GradientDescentOptimizer(0.01)
-        train = optimizer.minimize(loss, var_list=[accelSteps])
+        loss = tf.square(tf.sub(dist, distance))
+        train = tf.train.GradientDescentOptimizer(0.01).minimize(loss)
 
         z = 100.0
         while z > 0.5:
