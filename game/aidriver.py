@@ -39,7 +39,7 @@ class AIDriver:
 
 
     #Provides input responses based on the simulation state.
-    def process_input(self, velocity, success, top):
+    def process_input(self, velocity):
         key_map = {}
         key_map[pygame.K_SPACE] = False
         key_map[pygame.K_RIGHT] = False
@@ -51,5 +51,8 @@ class AIDriver:
             key_map[pygame.K_RIGHT] = True
         elif velocity > 0:
             key_map[pygame.K_LEFT] = True
+        else:
+            self.steps = 0
+            key_map[pygame.K_SPACE] = True
 
         return key_map
