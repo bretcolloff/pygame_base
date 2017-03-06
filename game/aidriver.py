@@ -12,14 +12,16 @@ class AIDriver:
 
     def train_ai(self, distance, car):
         session = tf.Session()
-        dist = tf.constant(distance, tf.float32)
-        accelSteps = tf.Variable(65.8, tf.float32)
-        accel = tf.placeholder(tf.float32) # car.accelStep
-        brake = tf.placeholder(tf.float32) # car.brakeStep
+        dist = tf.constant(distance, tf.float32, name="distance")
+        accelSteps = tf.Variable(65.5, tf.float32, name="steps")
+        accel = tf.placeholder(tf.float32, name="vehicle_accel") # car.accelStep
+        brake = tf.placeholder(tf.float32, name="vehicle_brake") # car.brakeStep
 
         # Start the TensorFlow session.
         init = tf.global_variables_initializer()
         session.run(init)
+
+        tf.summary.scalar("steps", accelSteps)
 
         # Work out distance travelled with current step value and get the highest acceleration value.
         s = tf.mul(accelSteps, accel)
@@ -31,14 +33,17 @@ class AIDriver:
 
         optimizer = tf.train.GradientDescentOptimizer(0.01)
         train = optimizer.minimize(loss)
+        merged = tf.summary.merge_all()
 
-        helpers.print_tensorboard(session, loss, {accel: car.accelStep, brake: car.brakeStep})
+        writer = tf.summary.FileWriter('./graphs', session.graph)
 
         for x in range(100):
-           session.run(train, {accel: car.accelStep, brake: car.brakeStep})
+            summary, _ = session.run([merged, train], {accel: car.accelStep, brake: car.brakeStep})
+            writer.add_summary(summary, x)
 
+        writer.close()
         self.steps = session.run(accelSteps)
-        print (self.steps)
+        session.close()
 
 
     #Provides input responses based on the simulation state.
