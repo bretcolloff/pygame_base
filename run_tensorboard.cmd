@@ -1,1 +1,1 @@
-tensorboard --logdir="./graphs" -port 6006
+stensorboard --logdir="./graphs" -port 6006
