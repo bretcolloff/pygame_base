@@ -37,7 +37,7 @@ class Game(GameBase):
             GameBase.handle_input(self)
         else:
             # Have the AI populate the input map.
-            self.input_map = self.aiDriver.process_input(self.distance, self.success, self.topSpeed)
+            self.input_map = self.aiDriver.process_input(self.car.velocity)
             self.inputHandler.apply_input(self.input_map)
 
         if self.input_map[pygame.K_SPACE] and self.car.velocity is 0:
